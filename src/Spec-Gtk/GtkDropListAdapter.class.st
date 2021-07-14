@@ -123,13 +123,18 @@ GtkDropListAdapter >> takeKeyboardFocus [
 { #category : #building }
 GtkDropListAdapter >> unsubscribe [ 
 
-	| subscriptionsToRemove |
+	| subscriptionsToRemove aSelection |
 	self presenter selection unsubscribeOuterContextReceiver: self.
 	
 	"please, pretend you haven't seen this"
 	subscriptionsToRemove := self presenter model announcer subscriptions subscriptions select: [:sub | (sub action at: 1) receiver = self ].
 	subscriptionsToRemove do: [ :sub |
 		self presenter model announcer subscriptions remove: sub ].
+	
+	aSelection := self presenter selection observablePropertyNamed: #selectedIndex.
+	aSelection
+		unsubscribe: self;
+		unsubscribeOuterContextReceiver: self.
 	
 	super unsubscribe.
 ]
