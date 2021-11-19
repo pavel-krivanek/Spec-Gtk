@@ -47,7 +47,7 @@ BaselineOfSpecGtk >> gtk: spec [
 
 	spec baseline: 'GtkCore' with: [ 
 		spec 
-			repository: 'github://pharo-spec/gtk-bindings';
+			repository: 'github://pavel-krivanek/gtk-bindings:production10';
 			className: 'BaselineOfGtk';			
 			loads: 'Core' ]
 ]
@@ -57,7 +57,7 @@ BaselineOfSpecGtk >> gtkCode: spec [
 
 	spec baseline: 'GtkCode' with: [ 
 		spec 
-			repository: 'github://pharo-spec/gtk-bindings';
+			repository: 'github://pavel-krivanek/gtk-bindings:production10';
 			className: 'BaselineOfGtk';
 			loads: 'Code' ]
 ]
@@ -67,7 +67,7 @@ BaselineOfSpecGtk >> gtkMorphic: spec [
 
 	spec baseline: 'GtkMorphic' with: [ 
 		spec 
-			repository: 'github://pharo-spec/gtk-bindings';
+			repository: 'github://pavel-krivanek/gtk-bindings:production10';
 			className: 'BaselineOfGtk';
 			loads: 'Morphic' ]
 ]
@@ -77,7 +77,7 @@ BaselineOfSpecGtk >> spec: spec [
 
 	spec baseline: 'SpecCore' with: [ 
 		spec 
-			repository: 'github://pharo-spec/Spec:Pharo10';
+			repository: 'github://pavel-krivanek/Spec:production10';
 			loads: 'Core' ]
 ]
 
@@ -86,7 +86,7 @@ BaselineOfSpecGtk >> specCode: spec [
 
 	spec baseline: 'SpecCode' with: [ 
 		spec 
-			repository: 'github://pharo-spec/Spec:Pharo10';
+			repository: 'github://pavel-krivanek/Spec:production10';
 			className: 'BaselineOfSpecCore';
 			loads: 'Code' ]
 ]
@@ -96,6 +96,6 @@ BaselineOfSpecGtk >> specMorphic: spec [
 
 	spec baseline: 'SpecMorphic' with: [ 
 		spec 
-			repository: 'github://pharo-spec/Spec:Pharo10';
+			repository: 'github://pavel-krivanek/Spec:production10';
 			className: 'BaselineOfSpec2' ]
 ]
