@@ -11,14 +11,14 @@ GtkDropListAdapter >> addModelTo: gtkComboBox [
 	self setModelTo: gtkComboBox.
 	
 	gtkComboBox connectChanged: [ self selectionChanged ].
-	self model whenSelectionChangedDo: [ 
-		gtkComboBox activeIndex: self model selectedIndex - 1 ].
-	self model model whenChangedDo: [ 
+	"self presenter whenSelectionChangedDo: [ 
+		gtkComboBox activeIndex: self presenter selectedIndex - 1 ]."
+	self presenter model whenChangedDo: [ 
 		self
 			disconnectSelectionEventsOf: gtkComboBox
 			during: [ self setModelTo: gtkComboBox ] ].
 		
-	self model selectedIndex 
+	self presenter selectedIndex 
 		ifNotNil: [ :index | gtkComboBox activeIndex: index - 1 ]
 ]
 
