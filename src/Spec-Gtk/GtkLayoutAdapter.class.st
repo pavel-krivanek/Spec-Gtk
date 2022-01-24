@@ -89,6 +89,12 @@ GtkLayoutAdapter >> buildWidget [
 ]
 
 { #category : #building }
+GtkLayoutAdapter >> buildWithSelector: aSelector [
+
+	^ self widget
+]
+
+{ #category : #building }
 GtkLayoutAdapter >> buildWithSpec [
 	"This provides some polymorphism with regular presenters to allow composition of layouts."
 	
