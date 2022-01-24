@@ -31,7 +31,6 @@ GtkLayoutAdapter >> add: aPresenter constraints: constraints [
 			constraints: constraints 
 			to: gtkWidget.
 		self addWidgetAlignment: constraints to: childWidget.
-		childWidget show.
 		"I'm keeping a reference to aPresenter into the built widget because in some cases 
 		 it can be GC (in case of the on-the-fly creation, for example). 
 		 Now this can be a real bad idea :)"
@@ -67,6 +66,16 @@ GtkLayoutAdapter >> applyVisibility [
 ]
 
 { #category : #private }
+GtkLayoutAdapter >> applyVisibility: gtkWidget [
+
+	self presenter isVisible
+		ifTrue: [ gtkWidget show ]
+		ifFalse: [ gtkWidget hide ].
+	self presenter whenVisibleChangedDo: [ :aValuable | 
+		self updateVisibility: aValuable value ]
+]
+
+{ #category : #private }
 GtkLayoutAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [ 
 
 	self subclassResponsibility
@@ -77,6 +86,12 @@ GtkLayoutAdapter >> buildWidget [
 	"We defer this until layout: (because then I will know what I have to create)"
 	
 	^ nil
+]
+
+{ #category : #building }
+GtkLayoutAdapter >> buildWithSelector: aSelector [
+
+	^ self widget
 ]
 
 { #category : #building }
@@ -123,6 +138,7 @@ GtkLayoutAdapter >> deferredLayout: aLayout [
 
 	layout := aLayout.
 	self applyLayout: aLayout.
+	self applyVisibility: widget.
 	self applyStyle: widget.
 	self addKeyBindingsTo: widget.
 	self addEventsTo: widget
