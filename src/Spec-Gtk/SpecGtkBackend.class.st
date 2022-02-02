@@ -17,6 +17,12 @@ SpecGtkBackend >> adapterBindingsClass [
 ]
 
 { #category : #accessing }
+SpecGtkBackend >> defaultConfigurationFor: anApplication [
+
+	^ anApplication defaultConfigurationForGtk
+]
+
+{ #category : #accessing }
 SpecGtkBackend >> defer: aBlock [ 
 
 	GRunLoop defer: aBlock
