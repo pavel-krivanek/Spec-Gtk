@@ -39,10 +39,10 @@ GtkAdapter >> adapt: aPresenter [
 GtkAdapter >> addContextMenuKeyBindings: gtkWidget [
 	
 	self flag: #TODO. "Take this from a configuration"
-	self 
+"self 
 		bindKeyCombination: $t command mac | $t control unix | $t control win
 		toAction: [ self showContextMenu ]
-		inWidget: gtkWidget
+		inWidget: gtkWidget"
 ]
 
 { #category : #building }

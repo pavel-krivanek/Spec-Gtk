@@ -5,10 +5,23 @@ Class {
 }
 
 { #category : #building }
-GtkProgressBarAdapter >> addModelTo: gtkWidget [
+GtkProgressBarAdapter >> addModelTo: gtkProgressBar [ 
 
-	gtkWidget showText.
-	self updateState
+	| provider context | 
+	provider := GtkCssProvider newFromString: ' progress, trough { min-height: 20px; margin: 5px; }'.
+
+	context := gtkProgressBar styleContext.
+	context addProvider: provider.
+	
+	gtkProgressBar progress: self presenter state value.
+	
+	self presenter adapter 
+		ifNotNil: [:oldAdapter | 
+			oldAdapter unsubscribe ].
+	
+	self presenter whenValueChangedDo: [ :val |
+		gtkProgressBar progress: val value asFloat.
+		 ]
 ]
 
 { #category : #api }
