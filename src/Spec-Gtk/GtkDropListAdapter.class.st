@@ -17,9 +17,14 @@ GtkDropListAdapter >> addModelTo: gtkComboBox [
 		self
 			disconnectSelectionEventsOf: gtkComboBox
 			during: [ self setModelTo: gtkComboBox ] ].
-		
-	self presenter selectedIndex 
-		ifNotNil: [ :index | gtkComboBox activeIndex: index - 1 ]
+	
+	(self presenter isStartWithSelection
+		and: [ self presenter model isEmpty not
+		and: [ self presenter selectedIndex = 0 ] ]) 
+		ifTrue: [ gtkComboBox selectIndex: 1 ]
+		ifFalse: [ 
+			self presenter selectedIndex 
+				ifNotNil: [ :index | gtkComboBox activeIndex: index - 1 ] ]
 ]
 
 { #category : #private }
@@ -32,14 +37,13 @@ GtkDropListAdapter >> disconnectSelectionEventsOf: aWidget during: aBlock [
 
 { #category : #accessing }
 GtkDropListAdapter >> displayedIcon [
-	
 	| selectedIndex |
+
 	selectedIndex := widget activeIndex.
 	
 	selectedIndex = -1 ifTrue: [ ^ nil ].
-	
-	self model hasIcons ifFalse: [ ^ nil ].
-	
+
+	self hasIcons ifFalse: [ ^ nil ].
 	^ (widget model iteratorFromString: selectedIndex asString) gdkPixbufAt: 0 
 ]
 
@@ -49,18 +53,23 @@ GtkDropListAdapter >> elementAt: index [
 	^ self presenter model at: index
 ]
 
+{ #category : #testing }
+GtkDropListAdapter >> hasIcons [
+
+	^ self presenter hasIcons
+]
+
 { #category : #building }
 GtkDropListAdapter >> modelItemsAsDisplay [
 	
 	^ self presenter model items 
-		collect: [ :each | self presenter displayForItem: each]
-	
+		collect: [ :each | self presenter displayForItem: each ]
 ]
 
 { #category : #building }
 GtkDropListAdapter >> newTreeStore [
 
-	self presenter hasIcons 
+	self hasIcons 
 		ifFalse: [ ^ GtkTreeStore newStrings: self modelItemsAsDisplay ].
 		
 	^ self newTreeStoreWithIcons
@@ -69,7 +78,7 @@ GtkDropListAdapter >> newTreeStore [
 { #category : #building }
 GtkDropListAdapter >> newTreeStoreWithIcons [
 	| store |
-	
+
 	store := GtkTreeStore newColumnTypes: { GType GDK_TYPE_PIXBUF. GType G_TYPE_STRING }.
 
 	self presenter model items do: [ :each | 
@@ -106,7 +115,7 @@ GtkDropListAdapter >> setModelTo: gtkComboBox [
 
 	columnIndex := 0.
 	gtkComboBox clear.
-	self presenter hasIcons ifTrue: [ 
+	self hasIcons ifTrue: [ 
 		gtkComboBox appendPixbufColumn: columnIndex.
 		columnIndex := columnIndex + 1 ].
 	gtkComboBox appendTextColumn: columnIndex.

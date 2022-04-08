@@ -312,26 +312,33 @@ GtkWindowAdapter >> newWidget [
 ]
 
 { #category : #notifying }
-GtkWindowAdapter >> notifyError: aSpecNotification [
+GtkWindowAdapter >> notifyError: aString [
 
-	infoArea addError: aSpecNotification message
+	infoArea addError: aString
 ]
 
 { #category : #notifying }
-GtkWindowAdapter >> notifyInfo: aSpecNotification [
+GtkWindowAdapter >> notifyInfo: aString [
 
-	infoArea addInfo: aSpecNotification message
+	infoArea addInfo: aString
 ]
 
 { #category : #accessing }
 GtkWindowAdapter >> open [
 
+	self openWithDeferredAction: [ ]
+]
+
+{ #category : #accessing }
+GtkWindowAdapter >> openWithDeferredAction: aBlock [
+ 
 	self hasWidget ifFalse: [ ^ nil ].
 	self widgetDo: [ :w |
 			w show.
 			w present ].
 	self presenter presenter takeKeyboardFocus.
 	self announceOpened.
+	aBlock value
 ]
 
 { #category : #'private building' }

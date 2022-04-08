@@ -187,12 +187,20 @@ GtkTableColumnPacker >> visitIndexColumn: aTableColumn [
 
 { #category : #visiting }
 GtkTableColumnPacker >> visitLinkColumn: aTableColumn [
-	| renderer |
+	| renderer index |
 	
-	renderer := aTableColumn isEditable 
-		ifTrue: [ self newEditableTextRendererFor: aTableColumn ]
-		ifFalse: [ self newTextRenderer ].
-	self addRendererPropertiesTo: renderer column: aTableColumn
+	renderer := GtkCellRendererLink new.
+	self addRendererPropertiesTo: renderer column: aTableColumn.
+	
+	index := self columnIndexOf: aTableColumn.
+	column packStart: renderer expand: self isExpand.
+	column addAttribute: 'text' column: index renderer: renderer.
+	
+	aTableColumn action ifNotNil: [ 	
+		renderer onActivate: [ :event :widget :path | 
+			| pathArray |
+			pathArray := (path substrings: '.') collect: [ :each | each asNumber + 1 ].
+			aTableColumn action value: (self store itemAtPath: pathArray) ] ]
 ]
 
 { #category : #visiting }
