@@ -96,6 +96,6 @@ BaselineOfSpecGtk >> specMorphic: spec [
 
 	spec baseline: 'SpecMorphic' with: [ 
 		spec 
-			repository: 'github://pharo-spec/Spec:Pharo10';
+			repository: 'github://pharo-spec/Spec:Pharo11';
 			className: 'BaselineOfSpec2' ]
 ]
