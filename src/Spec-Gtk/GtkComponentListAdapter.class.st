@@ -21,6 +21,13 @@ GtkComponentListAdapter class >> adaptingAliases [
 ]
 
 { #category : #building }
+GtkComponentListAdapter >> addKeyBindingsTo: gtkWidget [
+
+	super addKeyBindingsTo: gtkWidget.
+	self addContextMenuKeyBindings: gtkWidget
+]
+
+{ #category : #building }
 GtkComponentListAdapter >> addModelTo: gtkListBox [
 
 	gtkListBox canFocus: true.
@@ -184,7 +191,7 @@ GtkComponentListAdapter >> update: gtkWidget with: aCollection [
 		self flag: #TODO. "WARNING. Rebuild presenters may keep value holders in 
 		weird status (also, it may prevent old adaptors to be collected, creating 
 		a leak)."
-		gtkWidget add: (presenter buildWithSpec asListBoxRow
+		gtkWidget add: (presenter build asListBoxRow
 			data: presenter;
 			activatable: presenter isActivatable;
 			selectable: presenter isSelectable;

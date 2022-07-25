@@ -11,19 +11,22 @@ Class {
 { #category : #private }
 SpGtkConfiguration >> addCSSProviderFromPath: aString [
 
-	(GtkCssProvider newFromPath: aString) addForApplicationToDefaultScreen
+	GRunLoop defer: [ 	
+		(GtkCssProvider newFromPath: aString) addForApplicationToDefaultScreen ]
 ]
 
 { #category : #private }
 SpGtkConfiguration >> addCSSProviderFromReference: aReference [
 
-	(GtkCssProvider newFromReference: aReference) addForApplicationToDefaultScreen
+	GRunLoop defer: [ 
+		(GtkCssProvider newFromReference: aReference) addForApplicationToDefaultScreen ]
 ]
 
 { #category : #private }
 SpGtkConfiguration >> addCSSProviderFromString: aString [
 
-	(GtkCssProvider newFromString: aString) addForApplicationToDefaultScreen
+	GRunLoop defer: [ 
+		(GtkCssProvider newFromString: aString) addForApplicationToDefaultScreen ]
 ]
 
 { #category : #'accessing - colors' }
@@ -35,7 +38,7 @@ SpGtkConfiguration >> buttonBackgroundColor [
 		| widget |
 		widget := GtkButton new. 
 		widget markForAutoRelease. 
-		widget styleContext getBackgroundColor ]
+		widget styleContext getBackgroundRGBAColor asColor ]
 ]
 
 { #category : #'accessing - colors' }
@@ -47,7 +50,7 @@ SpGtkConfiguration >> buttonSelectedColor [
 		| widget |
 		widget := GtkButton new. 
 		widget markForAutoRelease. 
-		widget styleContext getSelectedColor ]
+		widget styleContext getSelectedRGBAColor asColor ]
 ]
 
 { #category : #configuring }
@@ -95,7 +98,7 @@ SpGtkConfiguration >> listActiveColor [
 		| widget |
 		widget := GtkTreeView new. 
 		widget markForAutoRelease. 
-		widget styleContext getActiveColor ]
+		widget styleContext getActiveRGBAColor asColor ]
 ]
 
 { #category : #'accessing - colors' }
@@ -107,7 +110,7 @@ SpGtkConfiguration >> listSelectedColor [
 		| widget |
 		widget := GtkTreeView new. 
 		widget markForAutoRelease. 
-		widget styleContext getSelectedColor ]
+		widget styleContext getSelectedRGBAColor asColor ]
 ]
 
 { #category : #'accessing - colors' }
@@ -119,7 +122,7 @@ SpGtkConfiguration >> panelBackgroundColor [
 		| widget |
 		widget := GtkBox newVertical. 
 		widget markForAutoRelease. 
-		widget styleContext getBackgroundColor ]
+		widget styleContext getBackgroundRGBAColor asColor ]
 ]
 
 { #category : #'private accessing' }
@@ -137,5 +140,5 @@ SpGtkConfiguration >> textBackgroundColor [
 		| widget |
 		widget := GtkTextView new. 
 		widget markForAutoRelease. 
-		widget styleContext getBackgroundColor ]
+		widget styleContext getBackgroundRGBAColor asColor ]
 ]

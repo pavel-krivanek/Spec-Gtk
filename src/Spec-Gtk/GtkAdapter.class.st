@@ -138,7 +138,7 @@ GtkAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 	self 
 		bindKeyCombination: aShortcut 
 		toAction: aBlock 
-		inWidget: self widget
+		inWidget: self innerWidget
 ]
 
 { #category : #private }
@@ -158,7 +158,7 @@ GtkAdapter >> buildMenu: aMenuPresenter [
 
 	^ aMenuPresenter 
 		owner: self presenter;
-		buildWithSpec
+		build
 ]
 
 { #category : #building }
@@ -483,9 +483,9 @@ GtkAdapter >> showMenu: aValuable [
 	lastShownMenu 
 		connectDestroy: [ lastShownMenu := nil ];
 		showAll;
-		popupAtWidget: self widget
-			widgetAnchor: GdkGravity GDK_GRAVITY_CENTER
-			menuAnchor: GdkGravity GDK_GRAVITY_CENTER 
+		popupAtWidget: self innerWidget
+			widgetAnchor: GdkGravity GDK_GRAVITY_NORTH_WEST
+			menuAnchor: GdkGravity GDK_GRAVITY_NORTH_WEST 
 			triggerEvent: (GdkEvent fromHandle: ExternalAddress null).
 ]
 

@@ -98,7 +98,7 @@ GtkCodeAdapter >> applyStyleTo: textBuffer [
 	self presenter hasSyntaxHighlight ifFalse: [ ^ self ].
 	self presenter text isEmptyOrNil ifTrue: [ ^ self ].
 	textBuffer removeAllTags.
-	(self isForScripting or: [ self behavior isNil ])
+	(self isScripting or: [ self behavior isNil ])
 		ifTrue: [
 			self 
 				setExpressionText: textBuffer text 
@@ -191,7 +191,7 @@ GtkCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter style: styleNam
 		styleName ifNotNil: [ 
 			lastPopover addStyle: styleName ].
 		
-		lastPopover buildWithSpec.
+		lastPopover build.
 
 		endIter := w textBuffer 
 			selectionIteratorsDo: [ :start :end | end ] 
@@ -209,16 +209,16 @@ GtkCodeAdapter >> interactionModel: anInteractionModel [
 ]
 
 { #category : #'api - shout' }
-GtkCodeAdapter >> isForScripting [
+GtkCodeAdapter >> isScripting [
 
-	^ self presenter isForScripting
+	^ self presenter isScripting
 ]
 
 { #category : #'private - factory' }
 GtkCodeAdapter >> newCompletionEngine: anInteractionModel [
 
 	^ GtkCodeCompletionEngine new 
-		scripting: anInteractionModel isForScripting;
+		scripting: anInteractionModel isScripting;
 		doItRequestor: anInteractionModel;
 		doItContext: anInteractionModel doItContext;
 		completionClass: anInteractionModel selectedClassOrMetaClass;

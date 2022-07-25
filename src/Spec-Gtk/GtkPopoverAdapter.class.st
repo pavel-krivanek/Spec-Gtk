@@ -11,6 +11,7 @@ GtkPopoverAdapter >> addModelTo: gtkPopover [
 	gtkPopover add: self presenterWidget showAll.	
 	gtkPopover beRelativeTo: self presenter relativeTo adapter innerWidget. 
 	gtkPopover beNotModal.
+	gtkPopover connectHide: [ self unregister: gtkPopover ].
 	self setPopoverPositionTo: gtkPopover.
 	
 	self presenter whenPresenterChangedDo: [
@@ -28,22 +29,25 @@ GtkPopoverAdapter >> dismiss [
 
 	self widgetDo: [ :w | 
 		w popdown. 
-		"I need to destroy explicitly because it may cause gtk to send callbacks to 
+		"I need to disconnect explicitly because it may cause gtk to send callbacks to 
 		 me and it may (most of the times it *will*) be already collected (then... 
 		 well, crash)."
-		w destroy ]
+		w disconnectAll ]
 ]
 
 { #category : #api }
 GtkPopoverAdapter >> popup [
 
-	self widgetDo: [ :w | w popup; beModal ]
+	self widgetDo: [ :w | 
+		self register: w.
+		w popup; beModal ]
 ]
 
 { #category : #api }
 GtkPopoverAdapter >> popupPointingTo: aRectangle [
 
 	self widgetDo: [ :w | 
+		self register: w.
 		w 
 			setPointingTo: aRectangle asGdkRectangle;
 			popup ]
@@ -52,7 +56,7 @@ GtkPopoverAdapter >> popupPointingTo: aRectangle [
 { #category : #building }
 GtkPopoverAdapter >> presenterWidget [
 
-	^ self presenter presenter buildWithSpec
+	^ self presenter presenter build
 ]
 
 { #category : #building }
@@ -60,6 +64,13 @@ GtkPopoverAdapter >> rebuild [
 	
 	self widgetDo: [ :w |
 		self replaceChildPresenterOn: w ]
+]
+
+{ #category : #private }
+GtkPopoverAdapter >> register: gtkPopover [
+
+	(GEngine current isWindowRegistered: gtkPopover) ifTrue: [ ^ self ].
+	GEngine current registerWindow: gtkPopover
 ]
 
 { #category : #private }
@@ -74,6 +85,12 @@ GtkPopoverAdapter >> replaceChildPresenterOn: gtkPopover [
 GtkPopoverAdapter >> setPopoverPositionTo: gtkPopover [
 		
 	^ self presenter position applyTo: gtkPopover
+]
+
+{ #category : #private }
+GtkPopoverAdapter >> unregister: gtkPopover [
+
+	GEngine current unregisterWindow: gtkPopover
 ]
 
 { #category : #building }

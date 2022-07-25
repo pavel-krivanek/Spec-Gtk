@@ -16,6 +16,19 @@ SpecGtkBackend >> adapterBindingsClass [
 	^ GtkAdapterBindings
 ]
 
+{ #category : #'clipboard handling' }
+SpecGtkBackend >> copyToClipboard: aString [ 
+
+	GRunLoop defer: [ 
+		GtkClipboard forSelection text: aString ]
+]
+
+{ #category : #accessing }
+SpecGtkBackend >> defaultConfigurationFor: anApplication [
+
+	^ anApplication defaultConfigurationForGtk
+]
+
 { #category : #accessing }
 SpecGtkBackend >> defer: aBlock [ 
 
