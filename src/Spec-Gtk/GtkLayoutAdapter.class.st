@@ -217,7 +217,7 @@ GtkLayoutAdapter >> rebuild [
 	widget removeAll.
 	"re-add all"
 	layout children do: [ :each |
-		self add: each constraints: (layout constraintsFor: each) ].
+		self add: each forGtkLayoutRebuild constraints: (layout constraintsFor: each) ].
 	"show"
 	widget show.
 	"now dispose"
