@@ -5,9 +5,3 @@ Object >> forGtkLayoutRebuild [
 
 	^ self
 ]
-
-{ #category : #'*Spec-Gtk' }
-Object >> forLayoutRebuild [ 
-
-	^ self
-]
