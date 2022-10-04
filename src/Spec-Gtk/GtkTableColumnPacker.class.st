@@ -21,7 +21,7 @@ GtkTableColumnPacker >> addAlignmentAttribute: aTableColumn column: aColumn rend
 	aTableColumn displayAlignment ifNil: [ ^ self ].
 	aColumn 
 		addAttribute: 'xalign' 
-		column: (self columnIndexOf: aTableColumn tag: #alignment) 
+		column: (self columnIndexOf: aTableColumn tag: #xalign) 
 		renderer: aRenderer
 ]
 
@@ -265,7 +265,7 @@ GtkTableColumnPacker >> visitLinkColumn: aTableColumn [
 	aTableColumn action ifNotNil: [ 	
 		renderer onActivate: [ :event :widget :path | 
 			| pathArray |
-			pathArray := (path substrings: '.') collect: [ :each | each asNumber + 1 ].
+			pathArray := (path substrings: ':') collect: [ :each | each asNumber + 1 ].
 			aTableColumn action value: (self store itemAtPath: pathArray) ] ].
 	"attributes"
 	self addAlignmentAttribute: aTableColumn column: column renderer: renderer

@@ -235,16 +235,16 @@ GtkWindowAdapter >> delete [
 		self presenter application windowClosed: self ]
 ]
 
-{ #category : #private }
-GtkWindowAdapter >> handleKeyEvent: anEvent [
-
-	^ super handleKeyEvent: anEvent
-]
-
 { #category : #'private building' }
 GtkWindowAdapter >> infoArea [
 
 	^ infoArea ifNil: [ infoArea := GtkInfoArea new ]
+]
+
+{ #category : #notifying }
+GtkWindowAdapter >> inform: aString [
+
+	self notifyInfo: aString
 ]
 
 { #category : #initialization }
@@ -387,7 +387,7 @@ GtkWindowAdapter >> processDeferredActions [
 GtkWindowAdapter >> rebuild [
 
 	contentBox hide.
-	contentBox children do: [ :each | each markForAutoRelease ].
+	contentBox children do: [ :each | each ensureObjectRefAndAutoRelease ].
 	contentBox removeAll.
 	content := self model presenter adapter widget.
 	
