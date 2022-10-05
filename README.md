@@ -12,10 +12,10 @@ You can get it from: http://files.pharo.org/vm/pharo-spur64-headless/win/latest-
 
 NOTE: If you are running under cygwin subsystem, remember to `chmod +x *`. Libraries have to be executable!
 
-Then, you can just download a new Pharo 9.0 image: 
+Then, you can just download a new Pharo 11.0 image:
 
 ```
-curl https://get.pharo.org/64/90 | bash
+curl https://get.pharo.org/64/110+vm | bash
 ```
 
 ### On macOS: 
@@ -25,20 +25,20 @@ You need Gtk3 (installed by brew because paths are fixed for now)
 brew install gtk+3
 ```
 
-And you need the headless VM and a Pharo 9.0 image. You can get them from the zero-conf scripts: 
+And you need the headless VM and a Pharo 11.0 image. You can get them from the zero-conf scripts:
 
 ```
-curl https://get.pharo.org/64/90+vmHeadlessLatest | bash
+curl https://get.pharo.org/64/110+vm | bash
 ```
 
 
 ### On Linux
 You need to have Gtk3 installed.
 
-And you need the headless VM and a Pharo 9.0 image. You can get them from the zero-conf scripts: 
+And you need the headless VM and a Pharo 11 image. You can get them from the zero-conf scripts:
 
 ```
-curl https://get.pharo.org/64/90+vmHeadlessLatest | bash
+curl https://get.pharo.org/64/110+vm | bash
 ```
 
 
